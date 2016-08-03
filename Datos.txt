@@ -1,0 +1,13 @@
+﻿clave: c_likes2016
+user: mgideasn_c_likes
+BD: mgideasn_contador_likes
+
+
+identificador aplicación en facebook:
+277164629321853
+
+clave:
+1388f130c965d225b139db7572f13577
+
+http://mgideas.net/perfumes_factory/contador_likes/
+

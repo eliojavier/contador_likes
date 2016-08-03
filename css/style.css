@@ -1,0 +1,14 @@
+.debug{
+	border:1px solid black;
+}
+
+.bg{
+	background-color: #FF7514;
+	display: block;
+	text-align: center;
+}
+
+.alt
+{
+	height:300px;
+}
