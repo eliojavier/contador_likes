@@ -33,7 +33,6 @@
 				<script>
 					$(document).ready(function(){		
 						$("#buton").click( function(){
-                            document.getElementById("buton").disable = true;
 
 							var init = $("#valor").val();
 							var limit = init;
@@ -49,16 +48,9 @@
 							});
 							init++;
 							$("#valor").val(init);
-							//Aquí esta el valor del contador
+							
                             console.log('contador: ' + init);
-
-    //guardo el like del usuario
-    //tengo init (el num de like)
-    //obtengo status en la fecha de hoy
-    //si status == 1 -> comparo los likes
-    //si init == like_premiado -> es ganador, aumento cur_winner en 1. Si cur_winner == max_winner -> status == 0
-
-                            //guardo contador
+                            
                             $.ajax({
                                 data: {id_facebook: id_facebook, like: init},
                                 type: "POST",
@@ -66,6 +58,7 @@
                                 success: function(response){
                                     console.log(response);
 									if (response == 1){
+                                        alert("ganador");
 										window.location.href =  "formulario.php?id=" + id_facebook;
 									}
                                 },
