@@ -125,7 +125,12 @@
                         type: "POST",
                         url: "save_user.php",
                         success: function(response){
-							window.location.href =  "contador.php?id=" + id_facebook;
+							if(response){
+								window.location.href =  "contador.php?id=" + id_facebook;
+							}
+							else{
+								console.log("error");
+							}
                         },
                         error:function(response){
                             console.log('error ' + response);

@@ -45,7 +45,7 @@ if($like==$winner_like and $status==1){
         $sql = "UPDATE	wlikes SET STATUS = 0 WHERE DAY(DATE) = 16 AND MONTH(DATE) = 08 AND YEAR(DATE) = 2016";
         $status_updated = $conn->query($sql);
     }
-
+    
     echo json_encode(1);
 }
 else{

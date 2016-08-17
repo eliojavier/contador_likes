@@ -22,9 +22,23 @@ $id_facebook = $_POST['id_facebook'];
 </head>
 
 <body>
-<form action="">
-	<label for="nombre">Nombre: </label>
-	<input type="text">
-</form>
+<div class="col-md-2 col-md-offset-5">
+    <form role="form" action="save_winner.php">
+        <div class="form-group">
+            <label for="nombre">Nombre: </label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default">Aceptar</button>
+    </form>
+</div>
+
 </body>
 </html>
