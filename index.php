@@ -13,34 +13,35 @@
 	<link rel="stylesheet" href="css/style.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
-
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
 	<script src="js/jquery.counter.js"></script>
 </head>
+
 <body>
 	<script>
 		// This is called with the results from from FB.getLoginStatus().
 		function statusChangeCallback(response) {
-			console.log('statusChangeCallback');
-			console.log(response);
+	
 			// The response object is returned with a status field that lets the
 			// app know the current login status of the person.
 			// Full docs on the response object can be found in the documentation
 			// for FB.getLoginStatus().
 			if (response.status === 'connected') {
 				// Logged into your app and Facebook.
-				testAPI();
+                getData();
 			} 
 			else if (response.status === 'not_authorized') {
 				// The person is logged into Facebook, but not your app.
-				document.getElementById('status').innerHTML = 'Please log ' +
-					'into this app.';
+				// document.getElementById('status').innerHTML = 'Please log ' +
+                // 'into this app.';
+                console.log('not_authorized');
 			} 
 			else {
 				// The person is not logged into Facebook, so we're not sure if
 				// they are logged into this app or not.
-				document.getElementById('status').innerHTML = 'Please log ' +
-					'into Facebook.';
+                // document.getElementById('status').innerHTML = 'Please log ' +
+                // 'into Facebook.';
+                console.log('Not logged');
 			}
 		}
 
@@ -76,8 +77,8 @@
 
 			FB.getLoginStatus(function (response) {
 				statusChangeCallback(response);
+                //console.log(response);
 			});
-
 		};
 
 		// Load the SDK asynchronously
@@ -89,17 +90,52 @@
 			js.src = "//connect.facebook.net/en_US/sdk.js";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
+        
+        function getData() {
+            FB.api('/me', {fields: ['first_name', 'last_name', 'email', 'birthday']}, function (response) {
+                var id_facebook;
+                var first_name;
+                var last_name;
+                var email;
+                var birthday;
+				
+                if (response && !response.error) {
+                    for (var key in response) {
+                        if (response.hasOwnProperty(key)) {
+                            if(key === 'id'){
+                                id_facebook = response[key];
+                            }
+                            else if (key === 'first_name'){
+                                first_name = response[key];
+                            }
+                            else if (key === 'last_name'){
+                                last_name = response[key];
+                            }
+                            else if (key === 'email'){
+                                email = response[key];
+                            }
+                            else if (key === 'birthday'){
+                                birthday = response[key];
+                            }
+                        }
+                    }
 
-		// Here we run a very simple test of the Graph API after login is
-		// successful.  See statusChangeCallback() for when this call is made.
-		function testAPI() {
-			console.log('Welcome!  Fetching your information.... ');
-			FB.api('/me', function (response) {
-				console.log('Successful login for: ' + response.name);
-				document.getElementById('status').innerHTML =
-					'Thanks for logging in, ' + response.name + '!';
-			});
-		}
+					$.ajax({
+                        data: {id_facebook: id_facebook, first_name: first_name, last_name: last_name, email: email},
+                        type: "POST",
+                        url: "save_user.php",
+                        success: function(response){
+							window.location.href =  "contador.php?id=" + id_facebook;
+                        },
+                        error:function(response){
+                            console.log('error ' + response);
+                        }
+                    });
+
+                }
+            });
+
+        }
 	</script>
 
 	<!--
@@ -112,48 +148,6 @@
 	</fb:login-button>
 
 	<div id="status">
-	</div>
-	
-	<div class="container">
-		<div class="row">
-			<div class="hidden-xs hidden-sm col-md-4 alt">
-				<div
-			  		class="fb-like"
-			  		data-share="true"
-			  		data-width="450"
-			  		data-show-faces="true">
-				</div>
-				aplicación
-			</div>	
-
-			<div class="col-md-4 debug bg alt">
-				<span id="custom"></span>
-				<script>
-					$(document).ready(function(){		
-						$("#buton").click( function(){
-							var init = $("#valor").val();
-							var limit = init;
-							limit++;
-							$('#custom').addClass('counter-analog2').counter({
-								initial: init,
-								direction: 'up',
-								interval: '1',
-								format: '9999',
-								stop: limit
-							});
-							init++;
-							$("#valor").val(init);
-						});				
-					});   
-    			</script>
-    			<div id="buton" style="height:12px; width:30px; background:#CC6600;">Like!</div>
-    			<input id="valor" name="ivalor" type="hidden" value="0"/>
-			</div>
-
-			<div class="hidden-xs hidden-sm col-md-4 alt">
-				aplicación3
-			</div>				
-		</div>
 	</div>
 </body>
 </html>
