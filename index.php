@@ -1,6 +1,12 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
 		Contador de likes
 	</title>
@@ -9,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="js/jquery.counter-analog.css"/>
 	<link rel="stylesheet" type="text/css" href="js/jquery.counter-analog2.css"/>
 	<link rel="stylesheet" type="text/css" href="js/jquery.counter-analog3.css"/>
-
+    
 	<link rel="stylesheet" href="css/style.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
@@ -126,20 +132,18 @@
                         url: "save_user.php",
                         success: function(response){
 							if(response=="true"){
-								window.location.href =  "contador.php?id=" + id_facebook;
-							}
-							else{
-								console.log(response);
-							}
+                                window.location.href = "contador.php";
+                            }
+                            else{
+                                console.log(response);
+                            }
                         },
                         error:function(response){
                             console.log('error ' + response);
                         }
                     });
-
                 }
             });
-
         }
 	</script>
 

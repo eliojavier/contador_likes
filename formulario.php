@@ -1,5 +1,8 @@
 <?php
-$id_facebook = $_POST['id_facebook'];
+session_start();
+//$id_facebook = $_GET['id'];
+$id_facebook = $_SESSION['id'];
+
 ?>
 
 <!DOCTYPE html>
@@ -23,18 +26,23 @@ $id_facebook = $_POST['id_facebook'];
 
 <body>
 <div class="col-md-2 col-md-offset-5">
-    <form role="form" action="save_winner.php">
+    <form role="form" method="post" action="actualizar_datos.php">
+        <input name="id_facebook" type="hidden" value="<?php echo $id_facebook; ?>">
         <div class="form-group">
-            <label for="nombre">Nombre: </label>
-            <input type="text" class="form-control">
+            <label for="cedula">Cédula: </label>
+            <input name="cedula" type="text" class="form-control">
         </div>
         <div class="form-group">
-            <label for="email">Email: </label>
-            <input type="email" class="form-control">
+            <label for="telefono">Teléfono: </label>
+            <input name="telefono" type="text" class="form-control">
         </div>
         <div class="form-group">
-            <label for="telefono">Teléfono</label>
-            <input type="text" class="form-control">
+            <label for="email">Email:</label>
+            <input name="email" type="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <textarea name="direccion" id="direccion" cols="30" rows="10" class="form-control"></textarea>
         </div>
         <button type="submit" class="btn btn-default">Aceptar</button>
     </form>

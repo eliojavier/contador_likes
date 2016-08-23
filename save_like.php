@@ -1,6 +1,16 @@
 <?php
-$id_facebook = $_POST['id_facebook'];
+//$id_facebook = $_POST['id_facebook'];
+session_start();
+$id_facebook = $_SESSION['id'];
 $like = $_POST['like'];
+
+date_default_timezone_set('America/Caracas'); // CDT
+$current_date = date('Y/m/d');
+$day = date('d');
+$month = date('m');
+$year = date('Y');
+
+$ganador = 0;
 
 // Create connection
 $conn = new mysqli('localhost', 'mgideasn_c_likes', 'c_likes2016', 'mgideasn_contador_likes');
@@ -16,44 +26,30 @@ if ($conn->connect_error) {
 else {
     //guardar el like del usuario conectado
     $sql = "UPDATE likes SET likes = $like WHERE id_facebook = \"$id_facebook\"";
-    $like_saved = $conn->query($sql);
+    $like_guardado = $conn->query($sql);
 
-    //obtener el número de like ganador
-    $sql = "SELECT winner_like FROM wlikes WHERE DAY(DATE) = '16' AND MONTH(DATE) = '08' AND YEAR(DATE) = '2016'"; //devuelve false en caso de error
+    //obtener el número de like sembrado
+    $sql = "SELECT  id, like_sembrado FROM siembras WHERE fecha = '$current_date' AND STATUS = 1 LIMIT 1";
     $query_response = $conn->query($sql);
-    $row = $query_response->fetch_array(MYSQLI_NUM);
-    $winner_like = (int)$row[0];
+    $row = $query_response->fetch_array(MYSQLI_ASSOC);
+    $id_siembra = (int)$row["id"];
+    $like_sembrado = (int)$row["like_sembrado"];
+    
+    if ($like == $like_sembrado) {
+        $sql = "INSERT INTO ganadores (fecha, id_siembras, id_users) VALUES (?,?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sis", $full_date, $id_siembra, $id_facebook);
+        $full_date = date('Y/m/d == H:i:s');
+        $stmt->execute();
 
-    //obtener el status
-    $sql = "SELECT status FROM wlikes WHERE DAY(DATE) = '16' AND MONTH(DATE) = '08' AND YEAR(DATE) = '2016'";
-    $query_response = $conn->query($sql);
-    $row = $query_response->fetch_array(MYSQLI_NUM);
-    $status = (int)$row[0];
-
-    //si es like ganador y está activo el concurso, es ganador y aumento el num de ganadores
-    if ($like == $winner_like and $status == 1) {
-        $sql = "UPDATE wlikes SET cur_winners = cur_winners + 1";
-        $query_response = $conn->query($sql);
-
-        $sql = "SELECT cur_winners FROM wlikes WHERE DAY(DATE) = 16 AND MONTH(DATE) = 08 AND YEAR(DATE)=2016";
-        $query_response = $conn->query($sql);
-        $row = $query_response->fetch_array(MYSQLI_NUM);
-        $cur_winners = (int)$row[0];
-
-        $sql = "SELECT max_winners FROM wlikes WHERE DAY(DATE) = 16 AND MONTH(DATE) = 08 AND YEAR(DATE)=2016";
-        $query_response = $conn->query($sql);
-        $row = $query_response->fetch_array(MYSQLI_NUM);
-        $max_winners = (int)$row[0];
-
-        if ($cur_winners == $max_winners) {
-            $sql = "UPDATE	wlikes SET STATUS = 0 WHERE DAY(DATE) = 16 AND MONTH(DATE) = 08 AND YEAR(DATE) = 2016";
-            $status_updated = $conn->query($sql);
+        $sql = "UPDATE siembras SET STATUS = 0 WHERE id = $id_siembra";
+        $cambiar_status = $conn->query($sql);
+        if($cambiar_status==true){
+            $ganador = 1;    
         }
-        echo json_encode(1);
     }
-    else {
-        echo json_encode(0);
-    }
-
-    $conn->close();
+    
+    echo json_encode($ganador);
 }
+
+    
