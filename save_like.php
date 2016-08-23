@@ -1,7 +1,7 @@
 <?php
-//$id_facebook = $_POST['id_facebook'];
 session_start();
 $id_facebook = $_SESSION['id'];
+
 $like = $_POST['like'];
 
 date_default_timezone_set('America/Caracas'); // CDT

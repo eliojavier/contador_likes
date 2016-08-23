@@ -41,7 +41,6 @@
                         var init;
 
                         $.ajax({
-                            data: {id_facebook: id_facebook},
                             type: "POST",
                             url: "get_likes.php",
                             success: function (response) {
@@ -127,12 +126,11 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Modal Header</h4>
+                            <h4 class="modal-title">¡Ganaste!</h4>
                         </div>
                         <div class="modal-body">
-                            <p>Some text in the modal.</p>
-                            <form role="form"">
-                                <input name="id_facebook" type="hidden" value="<?php echo $id_facebook; ?>">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda deserunt, esse itaque laborum quis rerum! Esse expedita illo in ipsa iste modi molestiae omnis placeat praesentium quaerat, rem tempora.</p>
+                            <form role="form">
                                 <div class="form-group">
                                     <label for="cedula">Cédula: </label>
                                     <input id="cedula" name="cedula" type="text" class="form-control">
@@ -149,11 +147,10 @@
                                     <label for="direccion">Dirección</label>
                                     <textarea id="direccion" name="direccion" id="direccion" cols="30" rows="10" class="form-control"></textarea>
                                 </div>
-                                <button type="button" id="guardar" class="btn btn-default">Aceptar</button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="guardar" class="btn btn-default" data-dismiss="modal">Aceptar</button>
                         </div>
                     </div>
 

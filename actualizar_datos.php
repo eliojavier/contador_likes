@@ -1,5 +1,7 @@
 <?php
-$id_facebook = $_POST['id_facebook'];
+session_start();
+$id_facebook = $_SESSION['id'];
+
 $cedula = $_POST['cedula'];
 $telefono = $_POST['telefono'];
 $email = $_POST['email'];
@@ -17,7 +19,6 @@ if ($conn->connect_error) {
     echo json_encode(false);
 }
 else{
-    $acentos = $conn->query("SET NAMES 'utf8'");
     $sql = "UPDATE ganadores SET cedula = '$cedula', telefono = '$telefono', email = '$email', direccion = '$direccion' WHERE id_users = '$id_facebook' AND cedula IS NULL";
     $respuesta = $conn->query($sql);
     echo json_encode(true);

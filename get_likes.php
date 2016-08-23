@@ -1,5 +1,6 @@
 <?php
-$id_facebook = $_POST['id_facebook'];
+session_start();
+$id_facebook = $_SESSION['id'];
 
 $user_saved = false;
 
