@@ -32,7 +32,6 @@ else{
         $current_date = date('Y/m/d');
         $stmt->execute();
     }
-
     
     $sql = "SELECT likes FROM likes WHERE fecha = '$current_date' AND id_facebook = '$id_facebook'";
     $query_response = $conn->query($sql);

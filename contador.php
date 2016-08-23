@@ -109,8 +109,7 @@
                     }
 
     			</script>
-
-
+                
     			<div id="buton" class="btn btn-primary" >Like!</div>
     			<input id="valor" name="ivalor" type="hidden" value="0"/>
 			</div>
